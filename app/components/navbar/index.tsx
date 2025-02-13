@@ -32,10 +32,7 @@ const Navbar = async () => {
                   });
                 }}
               >
-                <button
-                  type="submit"
-                  className="bg-transparent hover:bg-red-500 text-red-500 py-1 px-4 border border-red-500 hover:text-white hover:border-transparent rounded"
-                >
+                <button type="submit" className="btn-outlined">
                   <span>Logout</span>
                 </button>
               </form>
@@ -47,10 +44,7 @@ const Navbar = async () => {
                 await signIn("github");
               }}
             >
-              <button
-                type="submit"
-                className="flex bg-transparent hover:bg-red-500 text-red-500 py-1 px-4 border border-red-500 hover:text-white hover:border-transparent rounded"
-              >
+              <button type="submit" className="btn-outlined">
                 <GithubIcon />
                 <span>Login with github</span>
               </button>

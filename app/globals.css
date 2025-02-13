@@ -14,6 +14,12 @@
   }
 }
 
+@layer utilities {
+  .btn-outlined {
+    @apply flex bg-transparent hover:bg-primary-100 text-primary-100 py-1 px-4 border border-primary-100 hover:text-white hover:border-transparent rounded;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
