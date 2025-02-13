@@ -6,9 +6,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="font-work-sans">
+    <main className="h-screen flex flex-col">
       <Navbar />
-      {children}
+      <div className="flex-1 p-5">{children}</div>
     </main>
   );
 }

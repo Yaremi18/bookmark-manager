@@ -5,13 +5,14 @@ import { GithubIcon } from "../icons";
 
 const Navbar = async () => {
   const session = await auth();
+
   return (
-    <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
+    <header className="px-5 py-3 bg shadow-sm">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo-light.png" alt="Logo" width={186} height={42} />
+          <Image src="/logo-dark.png" alt="Logo" width={186} height={42} />
         </Link>
-        <div className="flex items-center gap-5 text-black">
+        <div className="flex items-center gap-5">
           {session && session.user ? (
             <>
               <Link href="/bookmarks">
@@ -33,7 +34,7 @@ const Navbar = async () => {
                 }}
               >
                 <button type="submit" className="btn-outlined">
-                  <span>Logout</span>
+                  <span>Sign out</span>
                 </button>
               </form>
             </>
@@ -46,7 +47,7 @@ const Navbar = async () => {
             >
               <button type="submit" className="btn-outlined">
                 <GithubIcon />
-                <span>Login with github</span>
+                <span>Sign in with github</span>
               </button>
             </form>
           )}

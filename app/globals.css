@@ -15,8 +15,14 @@
 }
 
 @layer utilities {
+  .btn {
+    @apply flex items-center justify-center max-w-fit;
+  }
   .btn-outlined {
-    @apply flex bg-transparent hover:bg-primary-100 text-primary-100 py-1 px-4 border border-primary-100 hover:text-white hover:border-transparent rounded;
+    @apply btn bg-transparent hover:bg-primary-300 text-primary-300 py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded;
+  }
+  .btn-primary {
+    @apply btn bg-primary-300 hover:bg-primary-200 text-white py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded;
   }
 }
 
