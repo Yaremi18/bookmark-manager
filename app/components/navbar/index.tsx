@@ -69,10 +69,23 @@ const Navbar: React.FC<MenuProps> = ({ session }) => {
     );
 
   return (
-    <header className="px-5 py-3 bg shadow-sm">
+    <header className="px-5 py-3 bg">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo-dark.png" alt="Logo" width={186} height={42} />
+          <Image
+            src="/logo-dark.png"
+            alt="Logo dark"
+            width={186}
+            height={42}
+            className="hidden dark:block"
+          />
+          <Image
+            src="/logo-light.png"
+            alt="Logo light"
+            width={186}
+            height={42}
+            className="block dark:hidden"
+          />
         </Link>
         {/** Menu for big screens */}
         <div className="hidden sm:flex items-center gap-5 ">{menu}</div>
