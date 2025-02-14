@@ -1,3 +1,4 @@
+import tailwindcssForms from "@tailwindcss/forms";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -10,14 +11,10 @@ export default {
     extend: {
       colors: {
         primary: {
+          bg: "rgb(239 68 68 / 0.1)",
           "100": "#FF7E7E",
           "200": "#F85E5E",
           "300": "#EF4444",
-        },
-        secondary: {
-          "100": "#FC7D1B",
-          "200": "#EF8E44",
-          "300": "#FFAA6A",
         },
         black: {
           "100": "#333333",
@@ -27,12 +24,15 @@ export default {
         },
         white: {
           "100": "#F7F7F7",
+          "200": "#f9f9f9",
           DEFAULT: "#FFFFFF",
         },
+        accent: "var(--accent)",
+        card: "var(--bg-card)",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssForms],
 } satisfies Config;

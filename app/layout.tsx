@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Italiana } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-const italiana = Italiana({
-  weight: "400",
+const italiana = Montserrat({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 

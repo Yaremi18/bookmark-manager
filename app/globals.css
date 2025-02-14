@@ -3,26 +3,48 @@
 @tailwind utilities;
 
 :root {
+  --accent: #6b7280;
   --background: #ffffff;
   --foreground: #171717;
+  --bg-card: #f7f7f7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --accent: #71717a;
+    --background: #111111;
     --foreground: #ededed;
+    --bg-card: #18181b;
   }
 }
 
 @layer utilities {
   .btn {
-    @apply flex items-center justify-center max-w-fit;
+    @apply flex items-center justify-center max-w-fit gap-2;
+  }
+  .btn-link {
+    @apply btn bg-transparent text-accent py-1 px-4 hover:text-primary-200;
   }
   .btn-outlined {
-    @apply btn bg-transparent hover:bg-primary-300 text-primary-300 py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded;
+    @apply btn bg-transparent hover:bg-primary-300 text-primary-300 py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded-lg;
   }
   .btn-primary {
-    @apply btn bg-primary-300 hover:bg-primary-200 text-white py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded;
+    @apply btn bg-primary-300 hover:bg-primary-200 text-white py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded-lg;
+  }
+  .input {
+    @apply w-56 h-9 p-2 rounded-lg border border-accent bg-card focus:ring-primary-300 focus:border-primary-300;
+  }
+  .checkbox {
+    @apply text-primary-300 focus:ring-primary-100 rounded-lg w-5 h-5 mt-2;
+  }
+  .tag {
+    @apply bg-primary-bg rounded-lg px-2 text-sm text-primary-300;
+  }
+  .form-item {
+    @apply flex flex-col gap-2;
+  }
+  .form-label {
+    @apply text-sm;
   }
 }
 
