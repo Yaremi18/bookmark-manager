@@ -82,6 +82,13 @@ export const useBookmarks = () => {
     });
   }, [bookmarksData, bookmarksLoading, state]);
 
+  useEffect(() => {
+    return () => {
+      setBookmarks(DEFAULT_LIST);
+      setPage(1);
+    };
+  }, []);
+
   return {
     bookmarksData: bookmarks,
     bookmarksLoading,
