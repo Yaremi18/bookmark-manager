@@ -49,7 +49,7 @@ const Navbar: React.FC<MenuProps> = ({ session }) => {
             handleSignOut();
           }}
         >
-          <button type="submit" className="btn-outlined">
+          <button type="submit" className="btn-link">
             <span>Sign out</span>
           </button>
         </form>
@@ -61,7 +61,7 @@ const Navbar: React.FC<MenuProps> = ({ session }) => {
           handleSignIn();
         }}
       >
-        <button type="submit" className="btn-outlined">
+        <button type="submit" className="btn-link">
           <GithubIcon />
           <span>Sign in with github</span>
         </button>
