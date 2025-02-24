@@ -1,23 +1,12 @@
-import { auth } from "@/auth";
 import { LIST_LIMIT } from "@/constants";
 import prisma from "@/lib/prisma";
+import { isUserAuthorized } from "@/utils/validateUser";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
-  const session = await auth();
-
-  if (!session?.user?.email) {
-    return NextResponse.json(null, { status: 401, statusText: "Unauthorized" });
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session.user.email,
-    },
-  });
-
-  if (!user) {
+  const session = await isUserAuthorized();
+  if (!session) {
     return NextResponse.json(null, { status: 401, statusText: "Unauthorized" });
   }
 
@@ -43,6 +32,7 @@ export const GET = async (req: NextRequest) => {
           },
         },
       },
+      deletedAt: null,
       isFavorite: onlyFavorites === "true" ? true : undefined,
       collectionId: collectionId ?? undefined,
       tags: _tags?.length ? { hasSome: _tags } : undefined,

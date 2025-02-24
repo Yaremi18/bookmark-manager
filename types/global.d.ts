@@ -12,6 +12,13 @@ declare namespace Bookmarker {
     isFavorite: boolean;
     shared: boolean;
     createdAt: string;
+    updatedAt: string;
+    deletedAt?: string;
+  };
+
+  type Collection = {
+    id: string;
+    name: string;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
