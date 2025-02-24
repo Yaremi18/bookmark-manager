@@ -2,6 +2,7 @@
 
 import { BookmarkCard } from "@/app/components/bookmarkCard";
 import { LIST_LIMIT } from "@/constants";
+import { useCollections } from "@/hooks/useCollections";
 import Form from "next/form";
 import { useBookmarks } from "./useBookmarks";
 
@@ -16,6 +17,9 @@ const Bookmarks = () => {
     bookmarksError,
   } = useBookmarks();
 
+  const { collectionsData, collectionsLoading, collectionsError } =
+    useCollections();
+
   return (
     <section>
       <h1 className="text-2xl my-4">Your bookmarks</h1>
@@ -25,7 +29,7 @@ const Bookmarks = () => {
       <Form action={formAction} className="flex gap-5 flex-wrap my-5 ">
         <fieldset className="form-item">
           <label htmlFor="search" id="search-label" className="form-label">
-            Search for name:
+            Search for title:
           </label>
           <input
             id="search"
@@ -37,19 +41,30 @@ const Bookmarks = () => {
         </fieldset>
         <fieldset className="form-item">
           <label
-            htmlFor="collection"
+            htmlFor="collectionId"
             id="collection-label"
             className="form-label"
           >
             Filter by collection:
           </label>
           <select
-            id="collection"
+            id="collectionId"
             className="input"
             name="collectionId"
             defaultValue={state.collectionId}
           >
-            <option value="all">All</option>
+            {collectionsLoading ? (
+              <option>...</option>
+            ) : (
+              <>
+                <option value="all">All</option>
+                {collectionsData?.map((collection) => (
+                  <option key={collection.id} value={collection.id}>
+                    {collection.name}
+                  </option>
+                ))}
+              </>
+            )}
           </select>
         </fieldset>
         <fieldset className="form-item">
@@ -107,7 +122,12 @@ const Bookmarks = () => {
       )}
 
       {bookmarksError && (
-        <p className="text-center">Error: {bookmarksError.message}</p>
+        <p className="text-center">Bookmarks error: {bookmarksError.message}</p>
+      )}
+      {collectionsError && (
+        <p className="text-center">
+          Collections error: {collectionsError.message}
+        </p>
       )}
     </section>
   );
