@@ -52,7 +52,7 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
       className="grid gap-5 my-5 w-full"
     >
       <fieldset className="form-item">
-        <label htmlFor="name" id="name-label" className="form-label">
+        <label htmlFor="title" id="title-label" className="form-label">
           Title:
         </label>
         <input
