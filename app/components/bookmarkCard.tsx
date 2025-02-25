@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { EditIcon, HeartFilledIcon, HeartIcon } from "./icons";
 
 type BookmarkCardProps = {
@@ -17,15 +17,19 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({
     createdAt,
   },
 }) => {
+  const router = useRouter();
   return (
-    <div className="group p-4 rounded-lg bg-card border border-transparent hover:border-primary-300 cursor-pointer">
+    <div
+      onClick={() => {
+        router.push(`/bookmarks/edit/${id}`);
+      }}
+      className="group p-4 rounded-lg bg-card border border-transparent hover:border-primary-300 cursor-pointer"
+    >
       <div className="flex justify-between gap-2">
         <h3 className="text-lg font-bold">{title}</h3>
-        <Link href={`/bookmarks/${id}`}>
-          <span className="text-accent group-hover:text-primary-300">
-            <EditIcon />
-          </span>
-        </Link>
+        <span className="text-accent group-hover:text-primary-300">
+          <EditIcon />
+        </span>
       </div>
 
       <p className="text-xs text-accent">
