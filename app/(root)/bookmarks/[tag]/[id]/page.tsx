@@ -3,15 +3,15 @@
 import { BookmarkForm } from "@/app/components/bookmarkForm";
 import { redirect } from "next/navigation";
 import { use } from "react";
-import { useBookmark } from "./useBookmark";
+import { useEditBookmark } from "./useEditBookmark";
 
-type BookmarkProps = {
+type EditBookmarkProps = {
   params: Promise<{
     id: string;
   }>;
 };
 
-const Bookmark = ({ params }: BookmarkProps) => {
+const EditBookmark = ({ params }: EditBookmarkProps) => {
   const { id } = use(params);
 
   const {
@@ -22,7 +22,7 @@ const Bookmark = ({ params }: BookmarkProps) => {
     bookmarkUpdating,
     deleteBookmark,
     bookmarkDeleting,
-  } = useBookmark({
+  } = useEditBookmark({
     id,
   });
 
@@ -57,4 +57,4 @@ const Bookmark = ({ params }: BookmarkProps) => {
   );
 };
 
-export default Bookmark;
+export default EditBookmark;

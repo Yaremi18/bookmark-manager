@@ -2,11 +2,11 @@ import { deleteFetcher, updateFetcher } from "@/utils/fetcher";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-type UseBookmarkProps = {
+type UseEditBookmarkProps = {
   id: string;
 };
 
-export const useBookmark = ({ id }: UseBookmarkProps) => {
+export const useEditBookmark = ({ id }: UseEditBookmarkProps) => {
   const {
     data: bookmarkData,
     isLoading: bookmarkLoading,
