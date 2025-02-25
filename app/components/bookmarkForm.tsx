@@ -5,7 +5,7 @@ import { Tags } from "./tags";
 
 type BookmarkFormProps = {
   onSubmit: (state: FormState) => Promise<void>;
-  defaultValue: FormState;
+  defaultValue?: FormState;
   extraAction?: React.ReactNode;
   loading?: boolean;
 };
@@ -27,7 +27,7 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
   const formRef = useRef<HTMLFormElement>(null);
 
   const [state, action, actionLoading] = useActionState(
-    (prevState: FormState | null, formData: FormData) => {
+    (prevState: FormState, formData: FormData) => {
       const _formData = {
         title: formData.get("title") as string,
         url: formData.get("url") as string,

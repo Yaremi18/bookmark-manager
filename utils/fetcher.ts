@@ -20,3 +20,10 @@ export const deleteFetcher = async (url: string, { arg }: { arg: any }) =>
     method: "DELETE",
     body: JSON.stringify(arg),
   });
+
+// eslint-disable-next-line
+export const newFetcher = async (url: string, { arg }: { arg: any }) =>
+  fetcher(url, {
+    method: "POST",
+    body: JSON.stringify(arg),
+  });

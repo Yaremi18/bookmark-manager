@@ -4,9 +4,11 @@ import { BookmarkCard } from "@/app/components/bookmarkCard";
 import { LIST_LIMIT } from "@/constants";
 import { useCollections } from "@/hooks/useCollections";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { useBookmarks } from "./useBookmarks";
 
 const Bookmarks = () => {
+  const router = useRouter();
   const {
     formAction,
     formLoading,
@@ -25,7 +27,14 @@ const Bookmarks = () => {
     <section>
       <h1 className="text-2xl my-4">Your bookmarks</h1>
       <div className="flex justify-end my-5">
-        <button className="btn-primary">New bookmark</button>
+        <button
+          className="btn-primary"
+          onClick={() => {
+            router.push("/bookmarks/new");
+          }}
+        >
+          New bookmark
+        </button>
       </div>
       <Form action={formAction} className="flex gap-5 flex-wrap my-5 ">
         <fieldset className="form-item">

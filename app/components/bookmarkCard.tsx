@@ -57,6 +57,9 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({
           href={url}
           target="_blank"
           rel="noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           Open bookmark
         </a>
