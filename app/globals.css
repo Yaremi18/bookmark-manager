@@ -20,10 +20,10 @@
 
 @layer utilities {
   .btn {
-    @apply flex items-center justify-center max-w-fit gap-2 h-fit;
+    @apply flex items-center justify-center max-w-fit gap-2 h-fit disabled:opacity-70;
   }
   .btn-link {
-    @apply btn bg-transparent text-accent py-1 px-4 hover:text-primary-200;
+    @apply btn bg-transparent text-accent hover:text-primary-200 p-0;
   }
   .btn-outlined {
     @apply btn bg-transparent hover:bg-primary-300 text-primary-300 py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded-lg;
@@ -32,7 +32,7 @@
     @apply btn bg-primary-300 hover:bg-primary-200 text-white py-1 px-4 border border-primary-300 hover:text-white hover:border-transparent rounded-lg;
   }
   .input {
-    @apply w-56 h-9 p-2 rounded-lg border border-accent bg-card focus:ring-primary-300 focus:border-primary-300;
+    @apply w-full h-9 p-2 rounded-lg border border-accent bg-card focus:ring-primary-300 focus:border-primary-300;
   }
   .checkbox {
     @apply text-primary-300 focus:ring-primary-100 rounded-lg w-5 h-5 mt-2;
