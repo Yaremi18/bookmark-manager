@@ -1,5 +1,4 @@
 import { DEFAULT_LIST, LIST_LIMIT } from "@/constants";
-import { fetcher } from "@/utils/fetcher";
 import { useActionState, useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -39,17 +38,16 @@ export const useBookmarks = () => {
   const [bookmarks, setBookmarks] =
     useState<Bookmarker.List<Bookmarker.Bookmark>>(DEFAULT_LIST);
 
-  const [state, formAction] = useActionState(
+  const [state, formAction, formLoading] = useActionState(
     (prevState: FormState, formData: FormData) => {
       setPage(1);
       setBookmarks(DEFAULT_LIST);
-      const collectionId = formData.get("collectionId") as string;
 
       const newState = {
         search: formData.get("search") as string,
         tags: formData.get("tags") as string,
         onlyFavorites: formData.get("onlyFavorites") === "on",
-        collectionId: collectionId === "all" ? undefined : collectionId,
+        collectionId: formData.get("collectionId") as string,
       };
 
       if (JSON.stringify(newState) !== JSON.stringify(prevState)) {
@@ -65,8 +63,7 @@ export const useBookmarks = () => {
     isLoading: bookmarksLoading,
     error: bookmarksError,
   } = useSWR<Bookmarker.List<Bookmarker.Bookmark>>(
-    createBookmarksUrl(state, page),
-    fetcher
+    createBookmarksUrl(state, page)
   );
 
   useEffect(() => {
@@ -75,9 +72,12 @@ export const useBookmarks = () => {
     setBookmarks((prev) => {
       if (!prev) return bookmarksData;
 
+      const mergedMap = new Map();
+      bookmarksData.data.forEach((item) => mergedMap.set(item.id, item));
+
       return {
         total: bookmarksData.total,
-        data: [...prev.data, ...bookmarksData.data],
+        data: Array.from(mergedMap.values()),
       };
     });
   }, [bookmarksData, bookmarksLoading, state]);
@@ -94,6 +94,7 @@ export const useBookmarks = () => {
     bookmarksLoading,
     bookmarksError,
     formAction,
+    formLoading,
     state,
     page,
     setPage,

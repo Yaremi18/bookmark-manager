@@ -9,6 +9,7 @@ import { useBookmarks } from "./useBookmarks";
 const Bookmarks = () => {
   const {
     formAction,
+    formLoading,
     state,
     page,
     setPage,
@@ -91,8 +92,12 @@ const Bookmarks = () => {
             defaultChecked={state.onlyFavorites}
           />
         </fieldset>
-        <button type="submit" className="btn-outlined self-center ml-5">
-          Search
+        <button
+          type="submit"
+          disabled={formLoading}
+          className="btn-outlined self-center ml-5"
+        >
+          {formLoading ? "Searching..." : "Search"}
         </button>
       </Form>
 
