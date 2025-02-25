@@ -71,3 +71,36 @@ export const GET = async (req: NextRequest) => {
     total: transaction[1],
   });
 };
+
+export const POST = async (req: NextRequest) => {
+  const session = await isUserAuthorized();
+  if (!session) {
+    return NextResponse.json(null, { status: 401, statusText: "Unauthorized" });
+  }
+
+  const body = await req.json();
+
+  if (!body) {
+    return NextResponse.json(null, { status: 400, statusText: "Bad request" });
+  }
+
+  const bookmark = await prisma.bookmark.create({
+    data: {
+      title: body.title || undefined,
+      url: body.url || undefined,
+      description: body.description || undefined,
+      collectionId: body.collectionId || undefined,
+      tags: body.tags || undefined,
+      updatedAt: new Date(),
+    },
+  });
+
+  await prisma.bookmarkByUser.create({
+    data: {
+      bookmarkId: bookmark.id,
+      userId: session.user.id,
+    },
+  });
+
+  return NextResponse.json(bookmark);
+};
