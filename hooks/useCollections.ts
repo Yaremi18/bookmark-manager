@@ -1,4 +1,3 @@
-import { fetcher } from "@/utils/fetcher";
 import useSWR from "swr";
 
 export const useCollections = () => {
@@ -6,7 +5,7 @@ export const useCollections = () => {
     data: collectionsData,
     isLoading: collectionsLoading,
     error: collectionsError,
-  } = useSWR<Bookmarker.Collection[]>("/api/collections", fetcher);
+  } = useSWR<Bookmarker.Collection[]>("/api/collections");
 
   return {
     collectionsData,
