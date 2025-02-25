@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkForm } from "@/app/components/bookmarkForm";
+import { BookmarkForm } from "@/components/bookmarkForm";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useNewBookmark } from "./useNewBookmark";

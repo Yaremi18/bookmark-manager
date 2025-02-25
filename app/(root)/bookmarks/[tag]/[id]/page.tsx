@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkForm } from "@/app/components/bookmarkForm";
+import { BookmarkForm } from "@/components/bookmarkForm";
 import { redirect } from "next/navigation";
 import { use } from "react";
 import { useEditBookmark } from "./useEditBookmark";

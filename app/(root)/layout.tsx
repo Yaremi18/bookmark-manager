@@ -1,5 +1,5 @@
-import { NavbarWrapper } from "../components/navbar/wrapper";
-import { SWRProvider } from "../swrProvider";
+import { SWRProvider } from "@/app/swrProvider";
+import { NavbarWrapper } from "@/components/navbar/wrapper";
 
 export default function Layout({
   children,

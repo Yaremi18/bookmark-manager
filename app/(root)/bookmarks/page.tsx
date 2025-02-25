@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkCard } from "@/app/components/bookmarkCard";
+import { BookmarkCard } from "@/components/bookmarkCard";
 import { LIST_LIMIT } from "@/constants";
 import { useCollections } from "@/hooks/useCollections";
 import Form from "next/form";

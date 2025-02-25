@@ -1,4 +1,4 @@
-import { XIcon } from "@/app/components/icons";
+import { XIcon } from "@/components/icons";
 
 type TagsProps = {
   id: string;

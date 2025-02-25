@@ -1,4 +1,4 @@
-import { LeftArrowIcon } from "@/app/components/icons";
+import { LeftArrowIcon } from "@/components/icons";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
