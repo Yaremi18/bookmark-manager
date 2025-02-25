@@ -90,11 +90,7 @@ export const PATCH = async (
       id,
     },
     data: {
-      title: body.title || undefined,
-      url: body.url || undefined,
-      description: body.description || undefined,
-      collectionId: body.collectionId || undefined,
-      tags: body.tags || undefined,
+      ...body,
       updatedAt: new Date(),
     },
   });

@@ -1,5 +1,8 @@
+import { updateFetcher } from "@/utils/fetcher";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import { MouseEventHandler, useState } from "react";
+import useSWRMutation from "swr/mutation";
 import { EditIcon, HeartFilledIcon, HeartIcon } from "./icons";
 
 type BookmarkCardProps = {
@@ -13,11 +16,28 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({
     description,
     tags,
     collection,
-    isFavorite,
     createdAt,
+    ...rest
   },
 }) => {
+  const [isFavorite, setIsFavorite] = useState(rest.isFavorite);
   const router = useRouter();
+
+  const { trigger } = useSWRMutation(`/api/bookmarks/${id}`, updateFetcher, {
+    revalidate: false,
+    populateCache: true,
+    onSuccess: (data) => {
+      setIsFavorite(data.isFavorite);
+    },
+  });
+
+  const markFavorite: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.stopPropagation();
+    await trigger({
+      isFavorite: !isFavorite,
+    });
+  };
+
   return (
     <div
       onClick={() => {
@@ -47,8 +67,12 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({
       </div>
 
       <div className="flex justify-between gap-2 mt-4">
-        <button>
-          <span className="text-accent hover:text-primary-300">
+        <button onClick={markFavorite}>
+          <span
+            className={`text-accent hover:text-primary-300 ${
+              isFavorite ? "text-primary-300" : ""
+            }`}
+          >
             {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
           </span>
         </button>
