@@ -1,6 +1,7 @@
 import { useCollections } from "@/hooks/useCollections";
-import Form from "next/form";
+import { newFetcher } from "@/utils/fetcher";
 import { useActionState, useRef } from "react";
+import useSWRMutation from "swr/mutation";
 import { Tags } from "./tags";
 
 type BookmarkFormProps = {
@@ -28,29 +29,87 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
 
   const [state, action, actionLoading] = useActionState(
     (prevState: FormState, formData: FormData) => {
-      const _formData = {
-        title: formData.get("title") as string,
-        url: formData.get("url") as string,
-        description: formData.get("description") as string,
-        collectionId: formData.get("collectionId") as string,
-        tags: (formData.get("tags") as string)?.split(","),
-      };
+      let _formData = {} as any; // eslint-disable-line
+      formData.forEach((value, key) => {
+        _formData = {
+          ..._formData,
+          [key]:
+            key === "tags" ? (value as string)?.split(",") : (value as string),
+        };
+      });
 
-      return _formData;
+      return {
+        ...prevState,
+        ..._formData,
+      };
     },
     defaultValue
   );
 
+  const { trigger } = useSWRMutation("/api/ai", newFetcher);
+
+  const updateFormData = ({
+    target,
+  }: {
+    target: { value: string; name: string };
+  }) => {
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+
+      formData.append(target.name, target.value);
+
+      action(formData);
+    }
+  };
+
   return (
-    <Form
+    <form
       ref={formRef}
-      action={action}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(state);
       }}
       className="grid gap-5 my-5 w-full"
     >
+      <fieldset className="form-item flex flex-nowrap flex-row">
+        <label htmlFor="url" id="url-label" className="form-label">
+          URL:
+        </label>
+        <input
+          id="url"
+          type="text"
+          className="input"
+          name="url"
+          value={state?.url}
+          onChange={updateFormData}
+        />
+
+        {state?.url && (
+          <button
+            className="btn-link"
+            onClick={async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log(state.url);
+              const data = await trigger({
+                url: state.url,
+              });
+
+              if (formRef.current) {
+                const formData = new FormData(formRef.current);
+
+                formData.set("title", data.title);
+                formData.set("description", data.description);
+                if (data.tags) formData.set("tags", data.tags.join(","));
+
+                action(formData);
+              }
+            }}
+          >
+            Auto fill with openai
+          </button>
+        )}
+      </fieldset>
       <fieldset className="form-item">
         <label htmlFor="title" id="title-label" className="form-label">
           Title:
@@ -60,21 +119,11 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
           type="text"
           className="input"
           name="title"
-          defaultValue={state?.title}
+          value={state?.title}
+          onChange={updateFormData}
         />
       </fieldset>
-      <fieldset className="form-item">
-        <label htmlFor="url" id="url-label" className="form-label">
-          URL:
-        </label>
-        <input
-          id="url"
-          type="text"
-          className="input"
-          name="url"
-          defaultValue={state?.url}
-        />
-      </fieldset>
+
       <fieldset className="form-item">
         <label
           htmlFor="description"
@@ -83,12 +132,13 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
         >
           Description:
         </label>
-        <input
+        <textarea
           id="description"
-          type="text"
           className="input"
           name="description"
-          defaultValue={state?.description}
+          rows={5}
+          value={state?.description}
+          onChange={updateFormData}
         />
       </fieldset>
       <fieldset className="form-item">
@@ -103,16 +153,8 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
           id="collectionId"
           className="input"
           name="collectionId"
-          defaultValue={state?.collectionId}
-          onChange={(e) => {
-            if (formRef.current) {
-              const formData = new FormData(formRef.current);
-              if (state?.tags) formData.append("tags", state.tags.join(","));
-              formData.append("collectionId", e.target.value);
-              console.log(formData);
-              action(formData);
-            }
-          }}
+          value={state?.collectionId}
+          onChange={updateFormData}
         >
           {collectionsLoading ? (
             <option>...</option>
@@ -133,12 +175,12 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
           id="tags"
           defaultValue={state?.tags}
           action={(tags: string[]) => {
-            if (formRef.current) {
-              const formData = new FormData(formRef.current);
-              if (tags.length === 0) formData.delete("tags");
-              else formData.append("tags", tags.join(","));
-              action(formData);
-            }
+            updateFormData({
+              target: {
+                name: "tags",
+                value: tags.join(","),
+              },
+            });
           }}
         />
       </fieldset>
@@ -152,7 +194,7 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
           {loading || actionLoading ? "Saving..." : "Save"}
         </button>
       </div>
-    </Form>
+    </form>
   );
 };
 
