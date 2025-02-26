@@ -37,12 +37,8 @@ const Navbar: React.FC<MenuProps> = ({ session }) => {
         <Link href="/bookmarks">
           <span>Bookmarks</span>
         </Link>
-        <Link href="/favorities">
-          <span>Favs</span>
-        </Link>
-        <Link href={`/user/${session.user?.id}`}>
-          <span>{session.user?.name}</span>
-        </Link>
+        <span className="text-xs">{`Hi, ${session.user?.name}!`}</span>
+
         <form
           action={() => {
             setIsOpen(false);
@@ -50,7 +46,7 @@ const Navbar: React.FC<MenuProps> = ({ session }) => {
           }}
         >
           <button type="submit" className="btn-link">
-            <span>Sign out</span>
+            <span className="text-xs">Sign out</span>
           </button>
         </form>
       </>
