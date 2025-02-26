@@ -53,7 +53,7 @@ All commands are run from the root of the project, from a terminal:
 
 ### First time setup
 
-You must to have a file in the root, named **.env.local** with the next variables:
+You must to have a file in the root, named **.env** with the next variables:
 
 ```
 PORT=3000
