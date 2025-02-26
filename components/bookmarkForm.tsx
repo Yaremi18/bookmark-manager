@@ -90,7 +90,6 @@ const BookmarkForm: React.FC<BookmarkFormProps> = ({
             onClick={async (e) => {
               e.preventDefault();
               e.stopPropagation();
-              console.log(state.url);
               const data = await trigger({
                 url: state.url,
               });
