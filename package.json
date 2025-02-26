@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
+    "cheerio": "^1.0.0",
     "dayjs": "^1.11.13",
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",
+    "openai": "^4.85.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "swr": "^2.3.2"
